@@ -1,0 +1,353 @@
+import random
+import os
+
+# CLASSES
+class Card:
+    def __init__(self, suit, value, card_value):
+       # init: when an object is created from the class, and access is required to initialize the attributes of the class
+        self.suit = suit
+ 
+        self.value = value
+ 
+        self.card_value = card_value
+ 
+
+ 
+# BOOTLEG GUI
+def print_cards(cards, hidden):
+         
+    s = ""
+    for card in cards:
+        s = s + "\t ________________"
+    if hidden:
+        s += "\t ________________"
+    print(s)
+ 
+ 
+    s = ""
+    for card in cards:
+        s = s + "\t|                |"
+    if hidden:
+        s += "\t|                |"    
+    print(s)
+ 
+    s = ""
+    for card in cards:
+        if card.value == '10':
+            s = s + "\t|  {}            |".format(card.value)
+        else:
+            s = s + "\t|  {}             |".format(card.value)  
+    if hidden:
+        s += "\t|                |"    
+    print(s)
+ 
+    s = ""
+    for card in cards:
+        s = s + "\t|                |"
+    if hidden:
+        s += "\t|                |" 
+    print(s)    
+ 
+
+    s = ""
+    for card in cards:
+        s = s + "\t|                |"
+    if hidden:
+        s += "\t|                |" 
+    print(s)    
+ 
+    s = ""
+    for card in cards:
+        s = s + "\t|                |"
+    if hidden:
+        s += "\t|                |" 
+    print(s)    
+ 
+    s = ""
+    for card in cards:
+        s = s + "\t|       {}        |".format(card.suit)
+    if hidden:
+        s += "\t|                |" 
+    print(s)    
+ 
+    s = ""
+    for card in cards:
+        s = s + "\t|                |"
+    if hidden:
+        s += "\t|                |" 
+    print(s)    
+ 
+    s = ""
+    for card in cards:
+        s = s + "\t|                |"
+    if hidden:
+        s += "\t|                |" 
+    print(s)
+ 
+
+    s = ""
+    for card in cards:
+        s = s + "\t|                |"
+    if hidden:
+        s += "\t|                |" 
+    print(s)    
+ 
+    s = ""
+    for card in cards:
+        if card.value == '10':
+            s = s + "\t|            {}  |".format(card.value)
+        else:
+            s = s + "\t|            {}   |".format(card.value)
+    if hidden:
+        s += "\t|                |"        
+    print(s)    
+         
+    s = ""
+    for card in cards:
+        s = s + "\t|________________|"
+    if hidden:
+        s += "\t|________________|"
+    print(s)        
+ 
+    print()
+ 
+
+# Function for a single game of blackjack
+def blackjack_game(deck):
+
+ 
+    
+    player_cards = []
+    dealer_cards = []
+ 
+    
+    player_score = 0
+    dealer_score = 0
+
+    
+    while len(player_cards) < 2:
+ 
+        player_card = random.choice(deck)
+        player_cards.append(player_card)
+        deck.remove(player_card)
+        player_score += player_card.card_value
+ 
+        # ace
+        if len(player_cards) == 2:
+            if player_cards[0].card_value == 11 and player_cards[1].card_value == 11:
+                player_cards[0].card_value = 1
+                player_score -= 10
+ 
+        # show player cards   
+        print("YOUR CARDS: ")
+        print_cards(player_cards, False)
+        print("YOUR SCORE = ", player_score)
+ 
+        input()
+        # takes in what user inputs
+
+        dealer_card = random.choice(deck)
+        dealer_cards.append(dealer_card)
+        deck.remove(dealer_card)
+        dealer_score += dealer_card.card_value
+ 
+        # show dealer card
+        print("DEALER CARDS: ")
+        if len(dealer_cards) == 1:
+            print_cards(dealer_cards, False)
+            print("DEALER SCORE = ", dealer_score)
+        else:
+            print_cards(dealer_cards[:-1], True)
+            print("DEALER SCORE = ", dealer_score - dealer_cards[-1].card_value)
+
+        # ace
+        if len(dealer_cards) == 2:
+            if dealer_cards[0].card_value == 11 and dealer_cards[1].card_value == 11:
+                dealer_cards[1].card_value = 1
+                dealer_score -= 10
+ 
+        input()
+ 
+    # Player gets a blackjack   
+    if player_score == 21:
+        print("YOU HAVE A BLACKJACK!!!!")
+        print("YOU WIN.")
+        quit()
+ 
+  
+ 
+    # Print dealer and player cards
+    print("DEALER CARDS: ")
+    print_cards(dealer_cards[:-1], True)
+    print("DEALER SCORE = ", dealer_score - dealer_cards[-1].card_value)
+ 
+    print() 
+ 
+    print("YOUR CARDS: ")
+    print_cards(player_cards, False)
+    print("YOUR SCORE = ", player_score)
+ 
+    # Managing the player moves
+    while player_score < 21:
+        choice = input("Enter H to Hit or S to Stand : ")
+ 
+        # Sanity checks for player's choice
+        if len(choice) != 1 or (choice.upper() != 'H' and choice.upper() != 'S'):
+            print("Please input either S or H.")
+
+        if choice.upper() == 'H':
+ 
+
+            player_card = random.choice(deck)
+            player_cards.append(player_card)
+            deck.remove(player_card)
+ 
+    
+            player_score += player_card.card_value
+ 
+            #aces
+            c = 0
+            while player_score > 21 and c < len(player_cards):
+                if player_cards[c].card_value == 11:
+                    player_cards[c].card_value = 1
+                    player_score -= 10
+                    c += 1
+                else:
+                    c += 1 
+ 
+
+ 
+            # Print player and dealer cards
+            print("DEALER CARDS: ")
+            print_cards(dealer_cards[:-1], True)
+            print("DEALER SCORE = ", dealer_score - dealer_cards[-1].card_value)
+ 
+            print()
+ 
+            print("YOUR CARDS: ")
+            print_cards(player_cards, False)
+            print("YOUR SCORE = ", player_score)
+             
+        # stand
+        if choice.upper() == 'S':
+            break
+ 
+ 
+
+ 
+    # Print player and dealer cards
+    print("YOUR CARDS: ")
+    print_cards(player_cards, False)
+    print("YOUR SCORE = ", player_score)
+ 
+    print()
+    print("DEALER IS REVEALING THE CARDS....")
+ 
+    print("DEALER CARDS: ")
+    print_cards(dealer_cards, False)
+    print("DEALER SCORE = ", dealer_score)
+ 
+    # Check if player has a Blackjack
+    if player_score == 21:
+        print("YOU HAVE A BLACKJACK.")
+        quit()
+ 
+    # Check if player busts
+    if player_score > 21:
+        print("YOU BUSTED. YOU LOSE.")
+        quit()
+ 
+    input() 
+ 
+    # Managing the dealer moves
+    while dealer_score < 17:
+
+ 
+        print("DEALER DECIDES TO HIT.....")
+ 
+        # Dealing card for dealer
+        dealer_card = random.choice(deck)
+        dealer_cards.append(dealer_card)
+        deck.remove(dealer_card)
+ 
+        # Updating the dealer's score
+        dealer_score += dealer_card.card_value
+ 
+        # ace
+        c = 0
+        while dealer_score > 21 and c < len(dealer_cards):
+            if dealer_cards[c].card_value == 11:
+                dealer_cards[c].card_value = 1
+                dealer_score -= 10
+                c += 1
+            else:
+                c += 1
+ 
+        # print player and dealer cards
+        print("YOUR CARDS: ")
+        print_cards(player_cards, False)
+        print("YOUR SCORE = ", player_score)
+ 
+        print()
+ 
+        print("DEALER CARDS: ")
+        print_cards(dealer_cards, False)
+        print("DEALER SCORE = ", dealer_score)      
+ 
+        input()
+ 
+    # Dealer busts
+    if dealer_score > 21:        
+        print("DEALER BUSTED. YOU WIN.") 
+        quit()
+ 
+    # Dealer gets a blackjack
+    if dealer_score == 21:
+        print("DEALER HAS A BLACKJACK. YOU LOSE.")
+        quit()
+ 
+    # Tie
+    if dealer_score == player_score:
+        print("TIE GAME.")
+        quit()
+ 
+    # Player wins
+    elif player_score > dealer_score:
+        print("YOU WIN.")                 
+        quit()
+    # Dealer wins
+    else:
+        print("DEALER WINS.")                 
+        quit()
+if __name__ == '__main__':
+  # The __name__ in Python is a special variable that defines the name of the class or the current module or the script from which it gets invoked.
+
+
+
+
+    suits = ["Spades", "Hearts", "Clubs", "Diamonds"]
+ 
+
+    suits_values = {"Spades":"\u2664", "Hearts":"\u2661", "Clubs": "\u2667", "Diamonds": "\u2662"}
+ 
+
+    cards = ["A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K"]
+ 
+
+    cards_values = {"A": 11, "2":2, "3":3, "4":4, "5":5, "6":6, "7":7, "8":8, "9":9, "10":10, "J":10, "Q":10, "K":10}
+ 
+
+    deck = []
+ 
+
+
+
+
+    for suit in suits:
+
+        for card in cards:
+ 
+            # Adding card to the deck
+            deck.append(Card(suits_values[suit], card, cards_values[card]))
+
+    blackjack_game(deck)    
