@@ -197,7 +197,6 @@ def blackjack_game(deck):
 
         if choice.upper() == 'H':
  
-
             player_card = random.choice(deck)
             player_cards.append(player_card)
             deck.remove(player_card)
@@ -216,7 +215,6 @@ def blackjack_game(deck):
                     c += 1 
  
 
- 
             # Print player and dealer cards
             print("DEALER CARDS: ")
             print_cards(dealer_cards[:-1], True)
@@ -231,9 +229,6 @@ def blackjack_game(deck):
         # stand
         if choice.upper() == 'S':
             break
- 
- 
-
  
     # Print player and dealer cards
     print("YOUR CARDS: ")
@@ -329,19 +324,12 @@ if __name__ == '__main__':
  
 
     suits_values = {"Spades":"\u2664", "Hearts":"\u2661", "Clubs": "\u2667", "Diamonds": "\u2662"}
- 
 
     cards = ["A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K"]
- 
 
     cards_values = {"A": 11, "2":2, "3":3, "4":4, "5":5, "6":6, "7":7, "8":8, "9":9, "10":10, "J":10, "Q":10, "K":10}
- 
 
     deck = []
- 
-
-
-
 
     for suit in suits:
 
