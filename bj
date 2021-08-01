@@ -1,7 +1,7 @@
 import random
 import os
 
-# CLASSES
+# CARD CLASSES
 class Card:
     def __init__(self, suit, value, card_value):
        # init: when an object is created from the class, and access is required to initialize the attributes of the class
@@ -112,7 +112,7 @@ def print_cards(cards, hidden):
     print()
  
 
-# Function for a single game of blackjack
+# GAME
 def blackjack_game(deck):
 
  
@@ -187,7 +187,7 @@ def blackjack_game(deck):
     print_cards(player_cards, False)
     print("YOUR SCORE = ", player_score)
  
-    # Managing the player moves
+    # Player moves
     while player_score < 21:
         choice = input("Enter H to Hit or S to Stand : ")
  
@@ -261,7 +261,7 @@ def blackjack_game(deck):
  
     # Managing the dealer moves
     while dealer_score < 17:
-
+        # 17 is arbitrary, it's advised that once you get to 17 to not hit.
  
         print("DEALER DECIDES TO HIT.....")
  
